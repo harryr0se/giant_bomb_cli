@@ -30,3 +30,8 @@ Options:
   Debug Options:
     --debug             logs server requests and json reponses
 ```
+
+# FAQ
+
+## Where can I get my api key from?
+Your api key can be requested and found at http://www.giantbomb.com/api/
