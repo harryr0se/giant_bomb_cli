@@ -38,3 +38,8 @@ Options:
 
 ## Where can I get my api key from?
 Your api key can be requested and found at http://www.giantbomb.com/api/
+
+## Where is my api key stored?
+Your api key is stored in your home directory (~/.giant_bomb_cli/config)
+
+If you wish to change api key, just delete the config file and you'll be prompted to input a new one next time the script is run
