@@ -1,5 +1,8 @@
 # giant_bomb_cli
 Command line utility for downloading and streaming videos from Giant Bomb!
+
+![Example](http://i.imgur.com/IEeJ75N.gif)
+
 ```
 Usage: giant_bomb_cli.py [options]
 
