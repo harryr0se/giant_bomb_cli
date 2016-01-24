@@ -20,6 +20,8 @@ Options:
                         the folder to output downloaded content to
   --dump_video_types    will dump all known ids for video types,
   --filter              will attempt to filter by the below arguments
+  --sort=SORTORDER      orders the videos by their id (asc/desc) defaults to
+                        desc
 
   Filter options:
     Use these in conjunction with --filter to customise results

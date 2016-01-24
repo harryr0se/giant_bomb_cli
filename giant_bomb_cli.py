@@ -100,6 +100,7 @@ def create_request_url(args, api_key):
     request_url += "&format=json"
     request_url += "&limit=" + str(args.limit)
     request_url += "&offset=" + str(args.offest)
+    request_url += "&sort=id:" + args.sortOrder
     return request_url
 
 
@@ -149,6 +150,10 @@ def validate_args(opts):
         if( opts.quality not in video_qualities):
             gb_log(colours.Error, "Invalid quality value, options are 'low', 'high', 'hd'")
             return False
+
+    if( opts.sortOrder != "asc" and opts.sortOrder != "desc" ):
+        gb_log(colours.Error, "Invalid sort value, options are 'asc' or 'desc'")
+        return False
 
     return True
 
@@ -233,6 +238,7 @@ def main():
     parser.add_option('--output'            , dest="outputFolder"        , action="store"         , help="the folder to output downloaded content to")
     parser.add_option('--dump_video_types'  , dest="shouldDumpIDs"       , action="store_true"    , help="will dump all known ids for video types,", default=False )
     parser.add_option('--filter'            , dest="shouldFilter"        , action="store_true"    , help="will attempt to filter by the below arguments", default=False )
+    parser.add_option('--sort'              , dest="sortOrder"           , action="store"         , default="desc", help="orders the videos by their id (asc/desc) defaults to desc")
 
     # Filter options
     filter_options = optparse.OptionGroup(parser, "Filter options", "Use these in conjunction with --filter to customise results")
