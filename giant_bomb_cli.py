@@ -232,7 +232,7 @@ def main():
 
     parser.add_option('-l', '--limit'       , dest="limit"               , action="store"         , type="int", default=25, metavar="<x>", help="limits the amount of items requested, defaults to %default")
     parser.add_option('--offset'            , dest="offest"              , action="store"         , type="int", default=0, metavar="<x>", help="specify the offest into the results, defaults to %default")
-    parser.add_option('--quality'           , dest="quality"             , action="store"         , default="high", help="the quality of the video, used when streaming or downloading, defaults to %default")
+    parser.add_option('--quality'           , dest="quality"             , action="store"         , default="high", help="the quality of the video, used when streaming or downloading, (low, high, hd) defaults to %default")
     parser.add_option('--download'          , dest="shouldDownload"      , action="store_true"    , help="will attempt to download all videos matching filters", default=False)
     parser.add_option('--stream'            , dest="shouldStream"        , action="store_true"    , help="will attempt to stream videos matching filters via mplayer", default=False)
     parser.add_option('--output'            , dest="outputFolder"        , action="store"         , help="the folder to output downloaded content to")
@@ -248,7 +248,7 @@ def main():
 
     # Debug options
     degbug_options = optparse.OptionGroup(parser, "Debug Options")
-    degbug_options.add_option('--debug'             , dest="debugMode"           , action="store_true"    , help="logs server requests and json reponses", default=False)
+    degbug_options.add_option('--debug'             , dest="debugMode"           , action="store_true"    , help="logs server requests and json responses", default=False)
 
     parser.add_option_group(filter_options)
     parser.add_option_group(degbug_options)

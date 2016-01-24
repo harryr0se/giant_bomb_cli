@@ -19,7 +19,7 @@ This searches for all videos with "Assassin's Creed" in the title, in the Quick 
 
 It sets the requested quality to low and then downloads them in descending order
 
-# Usage 
+# Usage
 ```
 Usage: giant_bomb_cli.py [options]
 
@@ -29,7 +29,7 @@ Options:
   -l <x>, --limit=<x>   limits the amount of items requested, defaults to 25
   --offset=<x>          specify the offest into the results, defaults to 0
   --quality=QUALITY     the quality of the video, used when streaming or
-                        downloading, defaults to high
+                        downloading, (low, high, hd) defaults to high
   --download            will attempt to download all videos matching filters
   --stream              will attempt to stream videos matching filters via
                         mplayer
@@ -50,7 +50,7 @@ Options:
                         id of the video type (see --dump_video_types)
 
   Debug Options:
-    --debug             logs server requests and json reponses
+    --debug             logs server requests and json responses
 ```
 
 
