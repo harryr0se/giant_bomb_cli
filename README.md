@@ -3,6 +3,23 @@ Command line utility for downloading and streaming videos from Giant Bomb!
 
 ![Example](http://i.imgur.com/IEeJ75N.gif)
 
+# Examples
+
+##### Download the first 3 Mario Party Party videos
+```
+giant_bomb_cli.py -l 3 --sort asc --filter --name "Mario Party Party" --download
+```
+This searches for the first three videos with "Mario Party Party" in the title and downloads them in ascending order
+
+##### Download all the Assassin's Creed Quick Looks at low quality
+```
+giant_bomb_cli.py --filter --name "Assassin's Creed" --video_type 3 --quality low --download
+```
+This searches for all videos with "Assassin's Creed" in the title, in the Quick Look category (video type 3).
+
+It sets the requested quality to low and then downloads them in descending order
+
+# Usage 
 ```
 Usage: giant_bomb_cli.py [options]
 
@@ -35,6 +52,7 @@ Options:
   Debug Options:
     --debug             logs server requests and json reponses
 ```
+
 
 # FAQ
 
