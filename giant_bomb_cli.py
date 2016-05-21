@@ -27,6 +27,9 @@ video_types =   {   2	: "Video Reviews",
                     17	: "Metal Gear Scanlon",
                     18	: "VinnyVania, Premium",
                     19	: "Breaking Brad, Premium",
+                    20  : "Best of Giant Bomb",
+                    21  : "Game Tapes",
+                    22  : "Project B.E.A.S.T.",
                 }
 
 video_qualities = {  "low",
@@ -171,10 +174,10 @@ def download_video(url, filename):
     if( url == None ):
         gb_log(colours.Error, "Invalid URL, perhaps try another quality level?")
         return
-
+    api_key = get_api_key();
     gb_log(colours.Title, "Downloading " + url + " to " + filename)
     try:
-        call(["wget", url, "-c", "-O", filename])
+        call(["wget", "--user-agent", "downloading via giant_bomb_cli", url + "?api_key=" + api_key, "-c", "-O", filename])
     except Exception:
         gb_log(colours.Error, "Something has gone wrong whilst trying to download, is wget installed?")
 
