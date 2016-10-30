@@ -116,13 +116,13 @@ def retrieve_json_from_url(url, jsonObj):
     try:
         response = urllib2.urlopen(url).read()
     except urllib2.HTTPError, e:
-        gb_log(colour.Error, "HTTPError = " + str(e.code))
+        gb_log(colours.Error, "HTTPError = " + str(e.code))
     except urllib2.URLError, e:
-        gb_log(colour.Error, "URLError = " + str(e.reason))
+        gb_log(colours.Error, "URLError = " + str(e.reason))
     except httplib.HTTPException, e:
-        gb_log(colour.Error, "HTTPException")
+        gb_log(colours.Error, "HTTPException")
     except Exception:
-        gb_log(colour.Error, "generic exception when requesting url: " + url)
+        gb_log(colours.Error, "generic exception when requesting url: " + url)
 
     if( response != None):
         jsonFile = json.loads(response)
@@ -133,7 +133,7 @@ def retrieve_json_from_url(url, jsonObj):
                 jsonObj.update(jsonFile)
                 return True
         else:
-            gb_log(colour.Error, "Error occured: " + error)
+            gb_log(colours.Error, "Error occured: " + error)
 
     return False
 
