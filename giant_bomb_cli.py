@@ -13,25 +13,6 @@ class colours:
     Debug         	= '\033[32m'
     End         	= '\033[0m'
 
-video_types =   {   2	: "Video Reviews",
-                    3	: "Quick Looks",
-                    4	: "TANG",
-                    5	: "Endurance Run",
-                    6	: "Events",
-                    7	: "Trailers",
-                    8	: "Premium, Features",
-                    10	: "Premium",
-                    11	: "Extra Life",
-                    12	: "Encyclopedia Bombastica",
-                    13	: "Unfinished",
-                    17	: "Metal Gear Scanlon",
-                    18	: "VinnyVania, Premium",
-                    19	: "Breaking Brad, Premium",
-                    20  : "Best of Giant Bomb",
-                    21  : "Game Tapes",
-                    22  : "Project B.E.A.S.T.",
-                }
-
 video_qualities = {  "low",
                      "high",
                      "hd",
@@ -137,10 +118,17 @@ def retrieve_json_from_url(url, jsonObj):
 
     return False
 
-def dump_video_types():
+def dump_video_types(api_key):
     gb_log(colours.Title, "Dumping video type IDs")
-    for vid_id, desc in sorted(video_types.items()):
-        gb_log(colours.Desc, ("\t %2i: %s") % (vid_id, desc))
+    video_types_url = "http://www.giantbomb.com/api/video_types/?api_key=" + api_key + "&format=json"
+    jsonObj = json.loads("{}")
+
+    if  False == retrieve_json_from_url(video_types_url, jsonObj):
+        gb_log(colours.Error, "Failed to retrieve video types from GB API")
+        return 1
+    
+    for video_type in jsonObj["results"]:
+        gb_log(colours.Desc, ("\t %2i: %s - (%s)") % (video_type["id"], video_type["name"], video_type["deck"]))
 
 def validate_args(opts):
     # Validate filters
@@ -264,7 +252,7 @@ def main():
     api_key = get_api_key();
 
     if( opts.shouldDumpIDs ):
-        dump_video_types()
+        dump_video_types(api_key)
         return 0
 
     # Create the url and make the request
