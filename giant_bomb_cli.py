@@ -154,7 +154,7 @@ def stream_video(url):
         return
 
     try:
-        call(["mplayer", url, "--quiet"])
+        call(["mplayer", url + "?api_key=" + get_api_key()])
     except Exception:
         gb_log(colours.Error, "Something has gone wrong whilst trying to stream, is mplayer installed?")
 
@@ -162,10 +162,10 @@ def download_video(url, filename):
     if( url == None ):
         gb_log(colours.Error, "Invalid URL, perhaps try another quality level?")
         return
-    api_key = get_api_key();
+
     gb_log(colours.Title, "Downloading " + url + " to " + filename)
     try:
-        call(["wget", "--user-agent", "downloading via giant_bomb_cli", url + "?api_key=" + api_key, "-c", "-O", filename])
+        call(["wget", "--user-agent", "downloading via giant_bomb_cli", url + "?api_key=" + get_api_key(), "-c", "-O", filename])
     except Exception:
         gb_log(colours.Error, "Something has gone wrong whilst trying to download, is wget installed?")
 
