@@ -69,6 +69,8 @@ def create_filter_string_from_args(args):
     if(args.shouldFilter):
         filterString         += "&filter="
         if( args.filterName  != None):
+            # Handle spaces correctly
+            args.filterName  = args.filterName.replace(" ", "%20")
             filterString     += "name:"        + args.filterName + ","
         if( args.contentID   != None):
             filterString     += "id:"          + args.contentID + ","
