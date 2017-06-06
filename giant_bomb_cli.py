@@ -209,7 +209,7 @@ def output_response(response, args):
             if args.outputFolder != None:
                 if not os.path.exists(args.outputFolder):
                     os.makedirs(args.outputFolder)
-                    filename = args.outputFolder + "/" + filename
+                filename = args.outputFolder + "/" + filename
 
             download_video(url, filename)
 
