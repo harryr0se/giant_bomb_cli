@@ -74,8 +74,8 @@ def create_filter_string_from_args(args):
             filter_string += "name:" + args.filterName + ","
         if args.contentID != None:
             filter_string += "id:" + args.contentID + ","
-        if args.videoType != None:
-            filter_string += "video_type:" + args.videoType + ","
+        if args.videoShow != None:
+            filter_string += "video_show:" + args.videoShow + ","
 
     return filter_string
 
@@ -119,27 +119,27 @@ def retrieve_json_from_url(url, json_obj):
 
     return False
 
-def dump_video_types(api_key):
-    " Print out the list of video types "
-    gb_log(COLOURS["Title"], "Dumping video type IDs")
-    types_url = "http://www.giantbomb.com/api/video_types/?api_key={0}&format=json".format(api_key)
+def dump_video_shows(api_key):
+    " Print out the list of video shows "
+    gb_log(COLOURS["Title"], "Dumping video show IDs")
+    shows_url = "http://www.giantbomb.com/api/video_shows/?api_key={0}&format=json".format(api_key)
     json_obj = json.loads("{}")
 
-    if retrieve_json_from_url(types_url, json_obj) is False:
-        gb_log(COLOURS["Error"], "Failed to retrieve video types from GB API")
+    if retrieve_json_from_url(shows_url, json_obj) is False:
+        gb_log(COLOURS["Error"], "Failed to retrieve video shows from GB API")
         return 1
 
-    for video_type in json_obj["results"]:
+    for video_show in json_obj["results"]:
         gb_log(COLOURS["Desc"],
-               "\t {0}: {1} - ({2})".format(video_type["id"],
-                                            video_type["name"], video_type["deck"]))
+               "\t {0}: {1} - ({2})".format(video_show["id"],
+                                            video_show["title"], video_show["deck"]))
 
 def validate_args(opts):
     " Validate the users arguments "
 
     # Validate filters
     if opts.shouldFilter is False:
-        if opts.filterName != None or opts.contentID != None or opts.videoType != None:
+        if opts.filterName != None or opts.contentID != None or opts.videoShow != None:
             gb_log(COLOURS["Error"], "Please use --filter command to process filter arguments")
             return False
 
@@ -188,11 +188,14 @@ def output_response(response, args):
         desc = video["deck"]
         time_in_secs = video["length_seconds"]
         video_id = video["id"]
-        video_type = video["video_type"]
         url = video[args.quality + "_url"]
+        video_show_string = "None"
+        video_show = video.get("video_show")
+        if video_show:
+            video_show_string = video_show.get("title")
 
         gb_log(COLOURS["Title"],
-               u"{0} ({1}) [{2}] ID:{3}".format(name, video_type,
+               u"{0} ({1}) [{2}] ID:{3}".format(name, video_show_string,
                                                 convert_seconds_to_string(time_in_secs),
                                                 video_id))
         gb_log(COLOURS["Desc"], "\t" + desc)
@@ -261,8 +264,8 @@ def main():
     parser.add_argument('--output', dest="outputFolder", action="store",
                         help="the folder to output downloaded content to")
 
-    parser.add_argument('--dump_video_types', dest="shouldDumpIDs", action="store_true",
-                        help="will dump all known ids for video types,", default=False)
+    parser.add_argument('--dump_video_shows', dest="shouldDumpIDs", action="store_true",
+                        help="will dump all known ids for video shows,", default=False)
 
     parser.add_argument('--filter', dest="shouldFilter", action="store_true",
                         help="will attempt to filter by the below arguments", default=False)
@@ -280,8 +283,8 @@ def main():
 
     filter_opts.add_argument('--id', dest="contentID", action="store", help="id of the video")
 
-    filter_opts.add_argument('--video_type', dest="videoType", action="store",
-                             help="id of the video type (see --dump_video_types)")
+    filter_opts.add_argument('--video_show', dest="videoShow", action="store",
+                             help="id of the video show (see --dump_video_shows)")
 
     # Debug options
     degbug_options = parser.add_argument_group("Debug Options")
@@ -297,7 +300,7 @@ def main():
     api_key = get_api_key()
 
     if args.shouldDumpIDs:
-        dump_video_types(api_key)
+        dump_video_shows(api_key)
         return 0
 
     # Create the url and make the request
