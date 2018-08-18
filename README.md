@@ -13,9 +13,9 @@ This searches for the first three videos with "Mario Party Party" in the title a
 
 ##### Download all the Assassin's Creed Quick Looks at low quality
 ```
-giant_bomb_cli.py --filter --name "Assassin's Creed" --video_type 3 --quality low --download
+giant_bomb_cli.py --filter --name "Assassin's Creed" --video_show 3 --quality low --download
 ```
-This searches for all videos with "Assassin's Creed" in the title, in the Quick Look category (video type 3).
+This searches for all videos with "Assassin's Creed" in the title, in the Quick Look category (video show 3).
 
 It sets the requested quality to low and then downloads them in descending order
 
