@@ -38,6 +38,10 @@ Options:
   --filter              will attempt to filter by the below arguments
   --sort SORTORDER      orders the videos by their id (asc/desc) defaults to
                         desc
+  --download-archive DOWNLOADARCHIVE
+                        Download videos whose ids aren't listed within the
+                        file, the script will also update the archive file
+                        each run
 
 Filter options:
   Use these in conjunction with --filter to customise results

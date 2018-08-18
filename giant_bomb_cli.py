@@ -152,6 +152,10 @@ def validate_args(opts):
         gb_log(COLOURS["Error"], "Invalid sort value, options are 'asc' or 'desc'")
         return False
 
+    if opts.downloadArchive and not opts.downloadArchive.endswith(".json"):
+        gb_log(COLOURS["Debug"], "Appending json extension to download archive")
+        opts.downloadArchive += ".json"
+
     return True
 
 def stream_video(url):
@@ -180,7 +184,7 @@ def download_video(url, filename):
         gb_log(COLOURS["Error"],
                "Something has gone wrong whilst trying to download, is wget installed?")
 
-def output_response(response, args):
+def output_response(response, args, download_archive):
     " Prints details of videos found "
 
     for video in response["results"]:
@@ -214,7 +218,14 @@ def output_response(response, args):
                     os.makedirs(args.outputFolder)
                 filename = args.outputFolder + "/" + filename
 
+            if args.downloadArchive and video_id in download_archive["Downloaded"]:
+                gb_log(COLOURS["Debug"], "Skipping download as id is already in download archive")
+                continue
+
             download_video(url, filename)
+
+            if args.downloadArchive:
+                download_archive["Downloaded"].append(video_id)
 
     if len(response["results"]) == 0:
         gb_log(COLOURS["Desc"], "No video results")
@@ -273,6 +284,9 @@ def main():
     parser.add_argument('--sort', dest="sortOrder", action="store", default="desc",
                         help="orders the videos by their id (asc/desc) defaults to desc")
 
+    parser.add_argument('--download-archive', dest="downloadArchive", action="store",
+                        help="Download videos whose ids aren't listed within the file, the script will also update the archive file each run")
+
     # Filter options
     filter_opts = parser.add_argument_group("Filter options",
                                             "Use these in conjunction with " +
@@ -320,6 +334,15 @@ def main():
                                                              json_obj["number_of_total_results"]))
         gb_log(COLOURS["Debug"], json.dumps(json_obj, sort_keys=True, indent=4))
 
-    output_response(json_obj, args)
+    download_archive = {"Downloaded": []}
+    if args.downloadArchive and os.path.isfile(args.downloadArchive):
+        with open(args.downloadArchive, 'r') as archive_file:
+            download_archive = json.load(archive_file)
+
+    output_response(json_obj, args, download_archive)
+
+    if args.downloadArchive:
+        with open(args.downloadArchive, 'w') as archive_file:
+            json.dump(download_archive, archive_file, sort_keys=True, indent=4)
 
 main()
